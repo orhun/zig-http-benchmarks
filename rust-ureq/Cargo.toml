@@ -1,0 +1,15 @@
+[package]
+name = "rust-ureq"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ureq = "2.7.1"
+
+[profile.release]
+opt-level = 3
+debug = false
+panic = "unwind"
+lto = true
+codegen-units = 1
+strip = true
