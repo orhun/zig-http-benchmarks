@@ -1,0 +1,7 @@
+# configuration for https://editorconfig.org
+
+root = true
+
+[*.sh]
+indent_style = space
+indent_size = 2
