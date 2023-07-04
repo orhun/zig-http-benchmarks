@@ -36,4 +36,9 @@ target/
 
 # Go workspace file
 go.work
+
+# Go binary
 go-http-client/go-http-client
+
+### Benchmarks ###
+benchmarks.*
