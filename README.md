@@ -6,7 +6,7 @@ This repository contains a HTTP server/client implementation using Zig's standar
 
 ### Prerequisites
 
-- Zig, Rust/Cargo, Go, Python
+- Zig (`>=0.11`), Rust/Cargo, Go, Python
 - [Hyperfine](https://github.com/sharkdp/hyperfine) (for benchmarking)
 
 ### Benchmarking
