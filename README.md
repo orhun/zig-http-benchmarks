@@ -1,4 +1,4 @@
-## `zig-http-benchmarks`
+## `zig-http-benchmarks` ⚡
 
 Read the blog post: [**Zig Bits 0x4**](https://blog.orhun.dev/zig-bits-04/)
 
