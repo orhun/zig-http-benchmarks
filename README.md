@@ -22,23 +22,23 @@ The result will be saved to `benchmarks.md` and `benchmarks.json`.
 
 ```
 zig-http-client ran
-    2.23 ± 1.04 times faster than rust-ureq
-    4.16 ± 1.96 times faster than rust-hyper
-    6.41 ± 3.28 times faster than go-http-client
-   12.00 ± 5.53 times faster than curl
-   30.84 ± 11.16 times faster than rust-reqwest
-  223.89 ± 78.12 times faster than python-http-client
+    2.75 ± 1.88 times faster than rust-ureq
+    3.44 ± 2.49 times faster than rust-hyper
+    9.16 ± 6.13 times faster than go-http-client
+   11.52 ± 6.02 times faster than curl
+   43.41 ± 20.09 times faster than rust-reqwest
+  248.53 ± 109.23 times faster than python-http-client
 ```
 
-| Command              |    Mean [ms] | Min [ms] | Max [ms] |       Relative |
-| :------------------- | -----------: | -------: | -------: | -------------: |
-| `zig-http-client`    |    0.5 ± 0.2 |      0.3 |      1.8 |           1.00 |
-| `curl`               |    6.4 ± 2.0 |      3.5 |     10.7 |   12.00 ± 5.53 |
-| `rust-hyper`         |    2.2 ± 0.7 |      1.4 |      8.3 |    4.16 ± 1.96 |
-| `rust-reqwest`       |   16.4 ± 2.3 |     14.0 |     35.3 |  30.84 ± 11.16 |
-| `rust-ureq`          |    1.2 ± 0.4 |      0.6 |      3.1 |    2.23 ± 1.04 |
-| `go-http-client`     |    3.4 ± 1.3 |      2.1 |     11.2 |    6.41 ± 3.28 |
-| `python-http-client` | 118.9 ± 12.1 |     97.4 |    132.9 | 223.89 ± 78.12 |
+| Command              |    Mean [ms] | Min [ms] | Max [ms] |        Relative |
+| :------------------- | -----------: | -------: | -------: | --------------: |
+| `zig-http-client`    |    0.5 ± 0.2 |      0.3 |      3.7 |            1.00 |
+| `curl`               |    5.5 ± 1.6 |      3.5 |     13.1 |    11.52 ± 6.02 |
+| `rust-hyper`         |    1.6 ± 1.0 |      0.7 |      7.9 |     3.44 ± 2.49 |
+| `rust-reqwest`       |   20.6 ± 3.7 |     14.7 |     34.1 |   43.41 ± 20.09 |
+| `rust-ureq`          |    1.3 ± 0.7 |      0.6 |      5.7 |     2.75 ± 1.88 |
+| `go-http-client`     |    4.3 ± 2.2 |      2.2 |     17.6 |     9.16 ± 6.13 |
+| `python-http-client` | 117.7 ± 12.3 |     98.2 |    138.7 | 248.53 ± 109.23 |
 
 ### Plotting
 
