@@ -1,24 +1,27 @@
-use hyper::{body::Buf, client::Client};
+use hyper::{body::Buf, client::Client, Uri};
 use std::io::{stdout, Write};
 
-#[tokio::main(flavor = "current_thread")]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let client = Client::new();
-    let uri = "http://127.0.0.1:8000/get".parse()?;
-    let response = client.get(uri).await?;
-    let mut body = hyper::body::aggregate(response.into_body()).await?;
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()?
+        .block_on(async {
+            let client = Client::new();
+            let uri = "http://127.0.0.1:8000/get".parse::<Uri>()?;
 
-    let mut stdout = stdout().lock();
-    loop {
-        let chunk = body.chunk();
-        if chunk.is_empty() {
-            break;
-        }
+            for i in 1..=100 {
+                let response = client.get(uri.clone()).await?;
+                let body = hyper::body::aggregate(response.into_body()).await?;
 
-        let n_read = stdout.write(chunk)?;
-        body.advance(n_read);
-    }
-    stdout.flush()?;
+                let mut stdout = stdout().lock();
+                write!(&mut stdout, "{i} ")?;
 
-    Ok(())
+                std::io::copy(&mut body.reader(), &mut stdout)?;
+
+                stdout.write_all(b"\n")?;
+                stdout.flush()?;
+            }
+
+            Ok(())
+        })
 }

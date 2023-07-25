@@ -3,7 +3,7 @@
 cpwd="$(pwd)"
 required_bins=('zig' 'cargo' 'go' 'python' 'hyperfine')
 zig_bins=('zig-http-server' 'zig-http-client')
-rust_bins=('rust-hyper' 'rust-reqwest' 'rust-ureq')
+rust_bins=('rust-attohttpc' 'rust-hyper' 'rust-reqwest' 'rust-ureq')
 go_bins=('go-http-client')
 python_bins=('python-http-client')
 
@@ -43,6 +43,7 @@ args=(
   "-N"
   "--command-name" "zig-http-client"
   "--command-name" "curl"
+  "--command-name" "rust-attohttpc"
   "--command-name" "rust-hyper"
   "--command-name" "rust-reqwest"
   "--command-name" "rust-ureq"
@@ -52,7 +53,7 @@ args=(
 
 commands=(
   "${cpwd}/${zig_bins[1]}/zig-out/bin/${zig_bins[1]}"
-  "curl http://127.0.0.1:8000/get"
+  "curl http://127.0.0.1:8000/get?[1-100]"
 )
 
 for rust_bin in "${rust_bins[@]}"; do

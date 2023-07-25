@@ -23,20 +23,25 @@ pub fn main() !void {
     // Accept anything.
     try headers.append("accept", "*/*");
 
-    // Make the connection to the server.
-    var request = try client.request(.GET, uri, headers, .{});
-    defer request.deinit();
+    var i: usize = 0;
 
-    // Send the request and headers to the server.
-    try request.start();
+    while (i < 100) : (i += 1) {
+        // Make the connection to the server.
+        var request = try client.request(.GET, uri, headers, .{});
+        defer request.deinit();
 
-    // Wait for the server to send use a response
-    try request.wait();
+        // Send the request and headers to the server.
+        try request.start();
 
-    // Read the entire response body, but only allow it to allocate 8KB of memory.
-    const body = request.reader().readAllAlloc(allocator, 8192) catch unreachable;
-    defer allocator.free(body);
+        // Wait for the server to send use a response
+        try request.wait();
 
-    // Print out the response.
-    std.log.info("{s}", .{body});
+        // Read the entire response body, but only allow it to allocate 8KB of memory.
+        const body = request.reader().readAllAlloc(allocator, 8192) catch unreachable;
+        defer allocator.free(body);
+
+        // Print out the response.
+        const stdout = std.io.getStdOut().writer();
+        try stdout.print("{} {s}\n", .{i, body});
+    }
 }
