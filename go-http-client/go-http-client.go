@@ -21,6 +21,6 @@ func main() {
 			return
 		}
 
-		fmt.Println(string(body))
+		fmt.Println(i+1, string(body))
 	}
 }
