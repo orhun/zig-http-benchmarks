@@ -14,6 +14,13 @@ fn runServer(server: *http.Server, allocator: std.mem.Allocator) !void {
         });
         defer response.deinit();
 
+        try std.os.setsockopt(
+            response.connection.stream.handle,
+            std.os.IPPROTO.TCP,
+            std.os.TCP.NODELAY,
+            &std.mem.toBytes(@as(c_int, 1)),
+        );
+
         while (response.reset() != .closing) {
             // Handle errors during request processing.
             response.wait() catch |err| switch (err) {
@@ -57,8 +64,7 @@ fn handleRequest(response: *http.Server.Response, allocator: std.mem.Allocator) 
         // Write the response body.
         try response.do();
         if (response.request.method != .HEAD) {
-            try response.writeAll("Zig ");
-            try response.writeAll("Bits!\n");
+            try response.writeAll("Zig Bits!\n");
             try response.finish();
         }
     } else {
