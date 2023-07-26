@@ -14,6 +14,8 @@ fn runServer(server: *http.Server, allocator: std.mem.Allocator) !void {
         });
         defer response.deinit();
 
+        // Avoid Nagle's algorithm.
+        // <https://en.wikipedia.org/wiki/Nagle%27s_algorithm>
         try std.os.setsockopt(
             response.connection.stream.handle,
             std.os.IPPROTO.TCP,
