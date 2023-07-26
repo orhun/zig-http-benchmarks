@@ -22,10 +22,12 @@ pub fn main() !void {
 
     // Accept anything.
     try headers.append("accept", "*/*");
+    // Enable connection keep-alive.
+    try headers.append("connection", "keep-alive");
 
     var i: usize = 0;
 
-    while (i < 100) : (i += 1) {
+    while (i < 1000) : (i += 1) {
         // Make the connection to the server.
         var request = try client.request(.GET, uri, headers, .{});
         defer request.deinit();

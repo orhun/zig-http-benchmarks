@@ -53,7 +53,7 @@ args=(
 
 commands=(
   "${cpwd}/${zig_bins[1]}/zig-out/bin/${zig_bins[1]}"
-  "curl http://127.0.0.1:8000/get?[1-100]"
+  "curl http://127.0.0.1:8000/get?[1-1000]"
 )
 
 for rust_bin in "${rust_bins[@]}"; do
