@@ -1,10 +1,10 @@
 [package]
-name = "rust-hyper"
+name = "rust-http-server"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-hyper = { version = "0.14.27", features = ["client", "http1", "runtime"] }
+hyper = { version = "0.14.27", features = ["http1", "runtime", "server"] }
 tokio = { version = "1.29.1", features = ["rt"] }
 
 [profile.release]

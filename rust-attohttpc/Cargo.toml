@@ -1,11 +1,10 @@
 [package]
-name = "rust-hyper"
+name = "rust-attohttpc"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-hyper = { version = "0.14.27", features = ["client", "http1", "runtime"] }
-tokio = { version = "1.29.1", features = ["rt"] }
+attohttpc = { version = "0.25.0", default-features = false }
 
 [profile.release]
 opt-level = 3

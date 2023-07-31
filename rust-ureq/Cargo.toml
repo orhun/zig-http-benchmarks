@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-ureq = "2.7.1"
+ureq = { version = "2.7.1", default-features = false }
 
 [profile.release]
 opt-level = 3

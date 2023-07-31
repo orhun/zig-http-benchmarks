@@ -3,7 +3,7 @@
 cpwd="$(pwd)"
 required_bins=('zig' 'cargo' 'go' 'python' 'hyperfine')
 zig_bins=('zig-http-server' 'zig-http-client')
-rust_bins=('rust-hyper' 'rust-reqwest' 'rust-ureq')
+rust_bins=('rust-http-server' 'rust-attohttpc' 'rust-hyper' 'rust-reqwest' 'rust-ureq')
 go_bins=('go-http-client')
 python_bins=('python-http-client')
 
@@ -32,17 +32,22 @@ for go_bin in "${go_bins[@]}"; do
 done
 
 cd "${cpwd}" || exit
-server_bin="${zig_bins[0]}"
+server_bins=(
+  "${zig_bins[0]}/zig-out/bin/${zig_bins[0]}"
+  "${rust_bins[0]}/target/release/${rust_bins[0]}"
+)
 echo "Running the server..."
-"${cpwd}/${server_bin}/zig-out/bin/${server_bin}" &
+"${cpwd}/${server_bins[0]}" &
 SERVER_PID=$!
 trap 'kill -9 $SERVER_PID' SIGINT SIGTERM
 
 args=(
-  "--warmup" "5"
+  "--warmup" "10"
+  "--runs" "100"
   "-N"
-  "--command-name" "zig-http-client"
   "--command-name" "curl"
+  "--command-name" "zig-http-client"
+  "--command-name" "rust-attohttpc"
   "--command-name" "rust-hyper"
   "--command-name" "rust-reqwest"
   "--command-name" "rust-ureq"
@@ -50,12 +55,13 @@ args=(
   "--command-name" "python-http-client"
 )
 
-commands=(
-  "${cpwd}/${zig_bins[1]}/zig-out/bin/${zig_bins[1]}"
-  "curl http://127.0.0.1:8000/get"
-)
+commands=("curl http://127.0.0.1:8000/get?[1-1000]")
 
-for rust_bin in "${rust_bins[@]}"; do
+for zig_bin in "${zig_bins[@]:1}"; do
+  commands+=("${cpwd}/${zig_bin}/zig-out/bin/${zig_bin}")
+done
+
+for rust_bin in "${rust_bins[@]:1}"; do
   commands+=("${cpwd}/${rust_bin}/target/release/${rust_bin}")
 done
 

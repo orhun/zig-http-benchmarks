@@ -3,22 +3,45 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
+	"time"
 )
 
 func main() {
-	resp, err := http.Get("http://127.0.0.1:8000/get")
-	if err != nil {
-		fmt.Println("Error sending GET request:", err)
-		return
+	dialer := &net.Dialer{
+		Timeout:   30 * time.Second,
+		KeepAlive: 30 * time.Second,
 	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("Error reading response:", err)
-		return
+	transport := &http.Transport{
+		DialContext: dialer.DialContext,
+	}
+	client := &http.Client{
+		Transport: transport,
 	}
 
-	fmt.Println(string(body))
+	for i := 0; i < 1000; i++ {
+		req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8000/get", nil)
+		if err != nil {
+			fmt.Println("Error creating GET request:", err)
+			return
+		}
+
+		req.Header.Add("Connection", "keep-alive")
+
+		resp, err := client.Do(req)
+		if err != nil {
+			fmt.Println("Error sending GET request:", err)
+			return
+		}
+		defer resp.Body.Close()
+
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println("Error reading response:", err)
+			return
+		}
+
+		fmt.Println(i+1, string(body))
+	}
 }
