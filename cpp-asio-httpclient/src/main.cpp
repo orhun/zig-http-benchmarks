@@ -85,7 +85,7 @@ int main() {
       clients.back()->sendRequest(
           "GET /get HTTP/1.1\r\n"
           "Host: localhost\r\n"
-          "Connection: keep-alive\r\n"
+          "Connection: close\r\n"
           "\r\n",
           [&](const std::string &response) { responses.push_back(response); });
     }
