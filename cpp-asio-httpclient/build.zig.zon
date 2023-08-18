@@ -1,0 +1,11 @@
+.{
+    .name = "cpp-asio-httpclient",
+    .version = "0.1.0",
+    .license = "MIT",
+    .dependencies = .{
+        .asio = .{
+            .url = "https://github.com/kassane/asio/archive/2e97b6a4d37be85529d191380eeda67240fd61fe.tar.gz",
+            .hash = "12208b60f54e758b964ad3038973b7c4198d40ed6d6ea2955b6e44cee971e6edeb5e",
+        },
+    },
+}

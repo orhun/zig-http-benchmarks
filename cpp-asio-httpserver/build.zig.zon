@@ -1,0 +1,11 @@
+.{
+    .name = "cpp-asio-httpserver",
+    .version = "0.1.0",
+    .license = "MIT",
+    .dependencies = .{
+        .standaloneServer = .{
+            .url = "https://github.com/kassane/Standalone-Server/archive/12af18dfce121f5c6dc59702a0bbf99ce69f1677.tar.gz",
+            .hash = "1220b0320efd82e58de88d8a7ea86777efd39cb6196b2a4abdcdf3e264707121770e",
+        },
+    },
+}
