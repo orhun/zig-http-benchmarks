@@ -28,3 +28,40 @@ jobs:
       - name: Run benchmarks
         shell: bash
         run: ./bench.sh
+
+      - name: Generate plot
+        shell: bash
+        run: |
+          wget https://raw.githubusercontent.com/sharkdp/hyperfine/master/scripts/plot_whisker.py
+          python -m pip install -U matplotlib
+          python plot_whisker.py benchmarks.json -o benchmarks.png
+
+      - name: Upload output
+        uses: actions/upload-artifact@v3
+        with:
+          name: benchmark-output
+          path: benchmarks.*
+
+      - name: Checkout output branch
+        uses: actions/checkout@v3
+        if: github.event_name != 'pull_request'
+        with:
+          ref: output
+          fetch-depth: 1
+
+      - name: Download output
+        uses: actions/download-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          name: benchmark-output
+
+      - name: Commit to the branch
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          set +e
+          git add benchmarks.*
+          git commit -m "Update benchmarks"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git output
