@@ -55,6 +55,11 @@ jobs:
         with:
           name: benchmark-output
 
+      - name: Update the plot
+        run: |
+          cargo binstall -y menyoki
+          menyoki edit --invert benchmarks.png save benchmarks-bw.png
+
       - name: Commit to the branch
         if: github.event_name != 'pull_request'
         shell: bash
@@ -62,6 +67,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           set +e
-          git add benchmarks.*
+          git add benchmarks*
           git commit -m "Update benchmarks"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git output
