@@ -21,26 +21,28 @@ chmod +x bench.sh
 The result will be saved to `benchmarks.md` and `benchmarks.json`.
 
 ```
-rust-ureq ran
-    1.18 ± 0.22 times faster than rust-hyper
-    1.30 ± 0.27 times faster than rust-reqwest
-    1.74 ± 0.38 times faster than go-http-client
-    1.92 ± 0.40 times faster than rust-attohttpc
-    2.17 ± 0.63 times faster than zig-http-client
-    4.25 ± 0.73 times faster than curl
-   10.31 ± 1.47 times faster than python-http-client
+  rust-hyper ran
+    1.01 ± 0.02 times faster than rust-ureq
+    1.01 ± 0.02 times faster than rust-reqwest
+    1.24 ± 0.06 times faster than go-http-client
+    1.46 ± 0.05 times faster than rust-attohttpc
+    2.03 ± 0.05 times faster than zig-http-client
+    4.26 ± 0.12 times faster than curl
+    8.57 ± 0.12 times faster than python-http-client
+   19.93 ± 0.25 times faster than cpp-asio-httpclient
 ```
 
-| Command              |    Mean [ms] | Min [ms] | Max [ms] |     Relative |
-| :------------------- | -----------: | -------: | -------: | -----------: |
-| `curl`               | 295.2 ± 29.3 |    248.6 |    367.9 |  4.25 ± 0.73 |
-| `zig-http-client`    | 150.9 ± 38.1 |     98.5 |    250.2 |  2.17 ± 0.63 |
-| `rust-attohttpc`     | 133.4 ± 20.6 |    101.1 |    174.7 |  1.92 ± 0.40 |
-| `rust-hyper`         |  82.1 ± 10.1 |     65.7 |    106.0 |  1.18 ± 0.22 |
-| `rust-reqwest`       |  90.0 ± 14.0 |     67.8 |    126.0 |  1.30 ± 0.27 |
-| `rust-ureq`          |   69.5 ± 9.6 |     55.3 |     92.9 |         1.00 |
-| `go-http-client`     | 120.8 ± 20.0 |     84.6 |    171.6 |  1.74 ± 0.38 |
-| `python-http-client` | 716.5 ± 22.0 |    665.9 |    765.7 | 10.31 ± 1.47 |
+| Command               |    Mean [ms] | Min [ms] | Max [ms] |     Relative |
+| :-------------------- | -----------: | -------: | -------: | -----------: |
+| `curl`                | 457.9 ± 11.2 |    442.4 |    522.2 |  4.26 ± 0.12 |
+| `zig-http-client`     |  218.5 ± 4.8 |    210.3 |    240.3 |  2.03 ± 0.05 |
+| `rust-attohttpc`      |  157.2 ± 5.3 |    151.8 |    190.4 |  1.46 ± 0.05 |
+| `rust-hyper`          |  107.6 ± 1.3 |    104.4 |    114.8 |         1.00 |
+| `rust-reqwest`        |  108.7 ± 2.2 |    105.4 |    123.7 |  1.01 ± 0.02 |
+| `rust-ureq`           |  108.4 ± 2.3 |    105.7 |    123.1 |  1.01 ± 0.02 |
+| `go-http-client`      |  133.1 ± 6.2 |    127.6 |    159.2 |  1.24 ± 0.06 |
+| `python-http-client`  |  921.9 ± 5.9 |    911.4 |    947.1 |  8.57 ± 0.12 |
+| `cpp-asio-httpclient` | 2144.5 ± 4.5 |   2133.0 |   2168.2 | 19.93 ± 0.25 |
 
 ### Plotting
 
@@ -51,7 +53,13 @@ git clone --depth 1 https://github.com/sharkdp/hyperfine
 python hyperfine/scripts/plot_whisker.py benchmarks.json
 ```
 
-![plot_whisker](https://user-images.githubusercontent.com/24392180/257202869-bdc1dbf7-c4f8-4842-96c2-d9bab79cebed.jpg)
+![plot_whisker](https://raw.githubusercontent.com/orhun/zig-http-benchmarks/output/benchmarks.png)
+
+### Environment
+
+The results are coming from a GitHub runner (`ubuntu-latest`) and automated with [this workflow](https://github.com/orhun/zig-http-benchmarks/blob/master/.github/workflows/benchmark.yml).
+
+To see the output for the latest run, check out the [`output`](https://github.com/orhun/zig-http-benchmarks/tree/output) branch in this repository.
 
 ### License
 
