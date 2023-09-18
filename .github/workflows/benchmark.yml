@@ -32,7 +32,7 @@ jobs:
       - name: Generate plot
         shell: bash
         run: |
-          wget https://raw.githubusercontent.com/sharkdp/hyperfine/master/scripts/plot_whisker.py
+          wget https://raw.githubusercontent.com/orhun/zig-http-benchmarks/output/plot_whisker.py
           python -m pip install -U matplotlib
           python plot_whisker.py benchmarks.json -o benchmarks.png
 
