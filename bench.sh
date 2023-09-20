@@ -64,7 +64,7 @@ args=(
   "--command-name" "cpp-asio-httpclient"
 )
 
-commands=("curl http://127.0.0.1:8000/get?[1-1000]")
+commands=("curl -H 'Accept-Encoding: gzip' 'http://127.0.0.1:8000/get?range=1-1000'")
 
 for zig_bin in "${zig_bins[@]:1}"; do
   commands+=("${cpwd}/${zig_bin}/zig-out/bin/${zig_bin}")
